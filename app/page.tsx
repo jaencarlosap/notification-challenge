@@ -1,95 +1,69 @@
-import Image from 'next/image'
+"use client"
+import {
+  FormEvent,
+  useEffect,
+  useState
+} from 'react'
+import axios from 'axios'
 import styles from './page.module.css'
 
 export default function Home() {
+  const [categories, setCategories] = useState<string[]>([])
+  const [logs, setLogs] = useState<string>("")
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.target as HTMLFormElement)
+    axios.post('/api/postSaveLog', Object.fromEntries(data))
+  }
+
+  useEffect(() => {
+    async function initData() {
+      const categoriesData = await axios.get('/api/getCategories')
+      const logsData = await axios.get('/api/getLogs')
+
+      setCategories(categoriesData.data.data)
+      setLogs(logsData.data.data)
+    }
+
+    initData()
+  }, [])
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
+        <p>Choose a category of notification</p>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-container">
+          <div className="form-field">
+            <label htmlFor="category" className="form-label">Category:</label>
+            <select className="text-input" id="category" name='category' >
+              <option value="">Selected</option>
+              {categories?.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="message" className="form-label">Message:</label>
+            <textarea id="message" name='message' className="text-input" placeholder="Enter your message" />
+          </div>
+          <button className="button">Send</button>
+        </div>
+      </form>
+
+      <div className={styles['container-logs']}>
+        <h3>Show logs</h3>
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+          <pre>
+            {logs}
+          </pre>
         </div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
   )
 }

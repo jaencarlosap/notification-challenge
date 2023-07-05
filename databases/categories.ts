@@ -1,0 +1,1 @@
+export const categories: string[] = ['Sports', 'Finance', 'Movies']

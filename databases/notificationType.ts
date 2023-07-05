@@ -1,0 +1,1 @@
+export const notificationType: string[] = ['SMS', 'E-Mail', 'Push Notification']

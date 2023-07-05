@@ -1,0 +1,81 @@
+/* Styles for the form container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Styles for form fields */
+.form-field {
+  margin-bottom: 16px;
+}
+
+/* Styles for form labels */
+.form-label {
+  font-weight: bold;
+}
+
+/* Styles for text inputs */
+.text-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.text-input:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* Styles for select inputs */
+.select-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23424242' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") no-repeat right 10px center/14px 14px;
+}
+
+.select-input:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* Styles for buttons */
+.button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+}
+
+.button:hover {
+  background-color: #1976d2;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Styles for error messages */
+.error-message {
+  color: red;
+  margin-top: 4px;
+  font-size: 14px;
+}
