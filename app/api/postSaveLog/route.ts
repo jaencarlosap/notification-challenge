@@ -27,7 +27,8 @@ export async function POST(request: Request) {
   })
 
   try {
-    const route = path.resolve(__dirname, '../../../../../databases/logs.json')
+    const route = path.resolve( process.cwd(), 'databases/logs.json')
+    console.log({route, __dirname })
     const prevLogNotification = readFileSync(route, { encoding: 'utf8', flag: 'r' });
     const parseLogData = JSON.parse(prevLogNotification || '[]')
     writeFileSync(route, JSON.stringify([...parseLogData, newLogNotification], null, 2));
